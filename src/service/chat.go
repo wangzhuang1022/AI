@@ -31,16 +31,16 @@ type Result struct {
 
 func main() {
 	//chat("你是哪个星座")
-	chat("你认识赵益吗")
+	Chat("你认识赵益吗")
 	time.Sleep(time.Second * 10)
 }
-func chat(info string) {
+func Chat(info string) *Result {
 	fmt.Println("问：", info)
 	result, err := askRobot(info)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	fmt.Println("答：", result)
+	return result
 }
 func askRobot(info string) (*Result, error) {
 	msgJson, err := json.Marshal(Msg{apiKey, info, "沈阳市", "123456"})

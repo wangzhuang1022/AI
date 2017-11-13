@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>机器人对话</title>
     <script src="./../js/jquery.js"></script>
+    <link rel="stylesheet" href="./../css/weui.css">
 </head>
 <body>
-第一个页面
-<button id="btn1">按钮1</button>
-<input id="text1" placeholder="存储内容" />
-<button id="btn2">按钮2</button>
-<input id="text2" aria-placeholder="显示" />
+<div style="overflow-y:auto; overflow-x:auto; width: 60%; height: 400px;" id="dialog">
+</div>
+<br>
+<div class="weui-cell" style="width: 30%; height: 100px; ">
+    <div class="weui-cell__bd">
+        <textarea id="question" class="weui-textarea" placeholder="请输入文本" rows="3" style="font-size: 20px; font-family: 微软雅黑"></textarea>
+        <div class="weui-textarea-counter"><span>0</span>/200</div>
+    </div>
+</div>
+<button class="weui-btn weui-btn_mini weui-btn_primary" id="sendBtn">发送</button>
 <script src="./../js/index.js"></script>
 </body>
 </html>

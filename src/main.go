@@ -2,6 +2,7 @@ package main
 
 import (
 	conf "./conf"
+	service "./service"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -10,10 +11,13 @@ import (
 func main() {
 	http.Handle("/js/", http.FileServer(http.Dir("template")))
 	http.Handle("/html/", http.FileServer(http.Dir("template")))
+	http.Handle("/css/", http.FileServer(http.Dir("template")))
+	http.Handle("/img/", http.FileServer(http.Dir("template")))
 
 	conf.Pool = conf.NewPool("127.0.0.1:6379", "", 0)
 	http.HandleFunc("/save/", saveHandler)
 	http.HandleFunc("/get/", getHandler)
+	http.HandleFunc("/chart/", chartHandler)
 	http.ListenAndServe(":1234", nil)
 }
 func saveHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,5 +44,17 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 	userid := paths[2]
 	getResult := conf.GetRedis(userid)
 	result, _ := json.Marshal(getResult)
+	w.Write(result)
+}
+func chartHandler(w http.ResponseWriter, r *http.Request){
+	err := r.ParseForm()
+	if err != nil {
+		result, _ := json.Marshal(string("参数错误"))
+		w.Write(result)
+		return
+	}
+	question := r.FormValue("question")
+	answer := service.Chat(question)
+	result, _ := json.Marshal(answer)
 	w.Write(result)
 }
